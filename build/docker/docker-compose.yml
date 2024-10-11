@@ -13,10 +13,15 @@ services:
     container_name: libresbc
     restart: always
     image: hnimminh/libresbc:latest
+    networks:
+      - sbc_net 
+    ports:
+      - 8080:8080
+      - 8021:8021
     volumes:
-      - ./liberator:/opt/libresbc/liberator
-      - ./callng:/opt/libresbc/callng
-    network_mode: host
+      - /liberator:/opt/libresbc/liberator
+      - /callng:/opt/libresbc/callng
+    #network_mode: host
     cap_add:
       - NET_ADMIN
       - SYS_NICE
@@ -30,3 +35,6 @@ services:
       - libre.env
     environment:
       SBC_VERSION: 0.7.1.c
+networks:
+  sbc_net:
+    external: true
